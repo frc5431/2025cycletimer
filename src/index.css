@@ -1,0 +1,109 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-style: none;
+  outline-style: none;
+  background: none; 
+  box-shadow: none; 
+  margin-bottom: -1vh;
+}
+
+img {
+  height: 20vh;
+  border: 1px solid black;
+}
+
+.reef {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+}
+
+.coralstuff {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+}
+
+.individualcoral {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  align-items: center;
+}
+
+.statusbutton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  padding: 1vw;
+  border-radius: 1vw;
+  background-color: #320e0e;
+  color: #fff;
+  font-size: 5rem;
+}
+
+.time {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 1vw;
+}
+
+.timerbuttons{
+  margin: 1vw;
+  font-size: 3rem;
+}
