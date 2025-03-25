@@ -31,14 +31,25 @@ function App() {
     return () => clearInterval(interval);
   }, [timeElapsed, started]);
 
+  useEffect(() => {endScreen ? setStarted(false) : null}, [endScreen]);
+
   function roundButGood(num: number): number {
     return (Math.round((num) / 100) / 10);
   }
 
   function newCycle(type: string) {
+    if (started) {
     setCycles(prevCycles => (prevCycles ? [...prevCycles, roundButGood(timeElapsed)] : [timeElapsed]));
-    setCycleMessages(prevCycleMessages => (prevCycleMessages ? [...prevCycleMessages, type + " at " + timeElapsed] : [type]));
+    setCycleMessages(prevCycleMessages => (prevCycleMessages ? [...prevCycleMessages, type + " at " + roundButGood(timeElapsed) + " seconds"] : [type]));
     console.log(cycleMessages)
+    }
+    else if (type === "CLEAR") {
+      setCycles([]);
+      setCycleMessages([]);
+    }
+    else {
+      alert("Timer is paused! Cannot log while paused.");
+    }
   }
   return (
     <>
@@ -86,16 +97,22 @@ function App() {
         </div>
 
         <div className="statusbuttons">
-          <button className="statusbutton" style={{ color: "#931314" }}>MISS</button>
+          <button className="statusbutton" style={{ color: "#931314" }} onClick={()=>newCycle("MISSED")}>MISS</button>
         </div>
 
         <div className="time">
-          <div>Time Since Last Cycle {roundButGood(timeElapsed - cycles[cycles.length - 1])}</div>
-          <div>Total Time {roundButGood(timeElapsed)}</div>
-          <div></div>
+          <div style={{fontSize:'1.4rem'}}>
+          <div>Time Since Last Cycle: {cycles.length > 0 ? roundButGood(timeElapsed - cycles[cycles.length - 1]) : 0}</div>
+          <div>Total Time: {roundButGood(timeElapsed)}</div>
+          </div>
+          <div style={{display:"flex", flexDirection:"column"}}>
           <button onClick={() => setStarted(!started)} style={{ fontSize: '3rem' }}>
             <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
           </button>
+          <button onClick={() => setTimeElapsed(0)} style={{ fontSize: '3rem'}}>
+            <span style={{ color: 'red' }}>RESET</span>
+          </button>
+          </div>
         </div>
         <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
           <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => setEndScreen(true)}>End</button>
@@ -105,6 +122,9 @@ function App() {
       {endScreen && <>
         <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
           <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => setEndScreen(false)}>Return</button>
+        </div>
+        <div style={{ bottom: 0, position: "absolute", right: 0, textAlign: "center", margin: '3vh' }}>
+          <button className="statusbutton" style={{ bottom: 0, backgroundColor: "red", color: 'black' }} onClick={() => newCycle("CLEAR")}>Clear</button>
         </div>
         <div style={{overflowY: 'scroll', height: '80vh', width:'40vw', fontSize:"1.5rem"}}>
         {cycleMessages ? cycleMessages.map((cycleMessage, i) => (
