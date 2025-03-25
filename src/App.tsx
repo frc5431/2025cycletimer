@@ -31,12 +31,12 @@ function App() {
     return () => clearInterval(interval);
   }, [timeElapsed, started]);
 
-  function roundButGood(num: number) : number {
+  function roundButGood(num: number): number {
     return (Math.round((num) / 100) / 10);
   }
 
   function newCycle(type: string) {
-    setCycles(prevCycles => (prevCycles ? [...prevCycles, roundButGood(timeElapsed) ] : [timeElapsed]));
+    setCycles(prevCycles => (prevCycles ? [...prevCycles, roundButGood(timeElapsed)] : [timeElapsed]));
     setCycleMessages(prevCycleMessages => (prevCycleMessages ? [...prevCycleMessages, type + " at " + timeElapsed] : [type]));
     console.log(cycleMessages)
   }
@@ -97,19 +97,21 @@ function App() {
             <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
           </button>
         </div>
-        <div style={{bottom:0, position:"absolute", left:0, textAlign:"center", margin:'3vh'}}>
-          <button className="statusbutton" style={{bottom:0, backgroundColor:"white", color:'black'}} onClick={()=>setEndScreen(true)}>End</button>
+        <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
+          <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => setEndScreen(true)}>End</button>
         </div>
       </>
       }
       {endScreen && <>
-        <div style={{bottom:0, position:"absolute", left:0, textAlign:"center", margin:'3vh'}}>
-          {cycleMessages ? cycleMessages.map((cycleMessage, i) => (
-            <div key={i.toString()}>
-              {cycleMessages[i]}
-            </div>
-          )) : null} 
-          <button className="statusbutton" style={{bottom:0, backgroundColor:"white", color:'black'}} onClick={()=>setEndScreen(false)}>Return</button>
+        <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
+          <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => setEndScreen(false)}>Return</button>
+        </div>
+        <div style={{overflowY: 'scroll', height: '80vh', width:'40vw', fontSize:"1.5rem"}}>
+        {cycleMessages ? cycleMessages.map((cycleMessage, i) => (
+          <div key={i.toString()}>
+            {cycleMessages[i]}
+          </div>
+        )) : null}
         </div>
       </>}
     </>
