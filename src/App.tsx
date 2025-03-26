@@ -13,7 +13,7 @@ function App() {
   const [cycleMessages, setCycleMessages] = useState<Array<string>>();
   const [endScreen, setEndScreen] = useState(false);
 
-  const stopwatch = useStopwatch({autoStart: true, interval: 20 });
+  const stopwatch = useStopwatch({autoStart: false, interval: 20 });
 
   function convertToSec(sec: number, mili: number): number {
     return sec + mili / 1000;
@@ -36,7 +36,7 @@ function App() {
     if (type === "CLEAR") {
       setCycles([]);
       setCycleMessages([]);
-      stopwatch.reset();
+      stopwatch.reset(undefined, false);
       setEndScreen(false);
     }
 
