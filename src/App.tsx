@@ -38,6 +38,17 @@ function App() {
     return accum / cycles.length;
   }
 
+  function deltaCycle(): string {
+    if (cycles.length == 0) {
+      return "NO CYCLE"
+    }
+
+    if(cycles.length == 1) {
+      return "ONLY 1 CYCLE"
+    }
+
+    return (averageCycle() - (cycles[cycles.length-1] - cycles[cycles.length-2])).toFixed(2);
+  }
   function newCycle(type: string) {
     if (type === "CLEAR") {
       setCycles([]);
@@ -103,10 +114,17 @@ function App() {
 
         <div className="time">
           <div style={{fontSize:'1.4rem'}}>
-          <div>Time Since Last Cycle: {cycles.length > 0 ? (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length-1]).toFixed(2) : (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
-          <div>Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
+          <div>
+            Current Cycle: {cycles.length > 0 ?
+            (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length-1]).toFixed(2) :
+            (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
+            {" "}||
+            Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
+          </div>
           <div>
             Average Cycle: {cycles.length > 0  ? averageCycle().toFixed(2) : "NO CYCLE"}
+            {" "}||
+            Delta Cycle (Last Cycle From average): {deltaCycle()}
           </div>
         </div>
           <div style={{display:"flex", flexDirection:"column"}}>
