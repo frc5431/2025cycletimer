@@ -81,6 +81,11 @@ img {
   flex-direction: row;
   gap: 1vw;
   align-items: center;
+  margin: 1vw;
+  font-size: 4rem;
+  background: #535bf2;
+  padding: 1vw;
+  border-radius: 10px;
 }
 
 .statusbutton {
@@ -101,6 +106,7 @@ img {
   left: 0;
   top: 0;
   margin: 1vw;
+  margin-left: 2.5vw;
 }
 
 .timerbuttons{
