@@ -49,6 +49,16 @@ function App() {
 
     return (averageCycle() - (cycles[cycles.length-1] - cycles[cycles.length-2])).toFixed(2);
   }
+
+  const copyToClipboard = () => {
+    const values = [averageCycle(), ConvertToSec(stopwatch.seconds, stopwatch.milliseconds), ...cycles];
+    const text = values.join("\t");
+
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied! Now paste into Google Sheets.");
+    });
+  }
+
   function newCycle(type: string) {
     if (type === "CLEAR") {
       setCycles([]);
@@ -151,6 +161,11 @@ function App() {
               {cycleMessage}
             </div>
           )) : null}
+          {cycleMessages &&
+          <div>
+            <button onClick={copyToClipboard}>Copy to Clipboard</button>
+          </div>
+          }
         </div>
       </>}
     </>
