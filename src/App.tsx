@@ -63,6 +63,8 @@ function App() {
     if (type === "CLEAR") {
       setCycles([]);
       setCycleMessages([]);
+      stopwatch.reset(undefined, false);
+      setEndScreen(false);
     }
 
     else if (stopwatch.isRunning) {
@@ -162,8 +164,9 @@ function App() {
             </div>
           )) : null}
           {cycleMessages &&
-          <div>
-            <button onClick={copyToClipboard}>Copy to Clipboard</button>
+          <div >
+            <br/>
+            <button onClick={copyToClipboard} style={{color: 'bisque'}}>Copy to Clipboard</button>
           </div>
           }
         </div>
