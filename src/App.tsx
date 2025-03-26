@@ -8,10 +8,8 @@ import './App.css'
 // import processor from './assets/processor.png'
 import { useEffect } from 'react'
 import { useStopwatch } from 'react-timer-hook'
+
 function App() {
-
-  const [started, setStarted] = useState(false);
-
   const [cycles, setCycles] = useState<Array<number>>([]);
   const [cycleMessages, setCycleMessages] = useState<Array<string>>();
   const [endScreen, setEndScreen] = useState(false);
@@ -27,21 +25,39 @@ function App() {
     return sec + mili / 1000;
   }
 
+  function averageCycle(): number {
+    let accum : number = 0;
+    for (let i = 0; i < cycles.length; i++) {
+      if (i == 0) {
+        accum += cycles[0];
+      }
+      else {
+        accum += cycles[i] - cycles[i-1];
+      }
+    }
+    return accum / cycles.length;
+  }
+
   function newCycle(type: string) {
     if (type === "CLEAR") {
       setCycles([]);
       setCycleMessages([]);
     }
-    else if (stopwatch.isRunning) {
-      setCycles(prevCycles => (prevCycles ? [...prevCycles, ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)] : [ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)]));
-      setCycleMessages(prevCycleMessages => (prevCycleMessages ? [...prevCycleMessages, type + " at " + ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) + " seconds"] : [type + " at " + ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) + " seconds"]));
-      console.log(cycles)
 
+    else if (stopwatch.isRunning) {
+      setCycles(prevCycles => (prevCycles ? [...prevCycles, ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)] :
+      [ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)]));
+      setCycleMessages(prevCycleMessages => (prevCycleMessages ?
+      [...prevCycleMessages, type + " at " + ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) + " seconds"] :
+      [type + " at " + ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) + " seconds"]));
+
+      console.log(cycles)
     }
     else {
       alert("Timer is paused! Cannot log while paused.");
     }
   }
+
   return (
     <>
       {!endScreen && <>
@@ -86,17 +102,17 @@ function App() {
         </div>
 
         <div className="time">
-          <div style={{ fontSize: '1.4rem' }}>
-            <div>Time Since Last Cycle: {cycles.length > 0 ? (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length - 1]).toFixed(2) : (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
-            <div>Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
+          <div style={{fontSize:'1.4rem'}}>
+          <div>Time Since Last Cycle: {cycles.length > 0 ? (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length-1]).toFixed(2) : (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
+          <div>Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}</div>
+          <div>
+            Average Cycle: {cycles.length > 0  ? averageCycle().toFixed(2) : "NO CYCLE"}
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <button onClick={() => stopwatch.isRunning ? stopwatch.pause() : stopwatch.start()} style={{ fontSize: '2.5rem' }}>
-              <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
-            </button>
-            <button onClick={() => stopwatch.reset(new Date(), false)} style={{ fontSize: '2.5rem' }}>
-              <span style={{ color: 'red' }}>RESET</span>
-            </button>
+        </div>
+          <div style={{display:"flex", flexDirection:"column"}}>
+          <button onClick={() => stopwatch.isRunning ? stopwatch.pause() : stopwatch.start()} style={{ fontSize: '3rem' }}>
+            <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
+          </button>
           </div>
         </div>
         <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
