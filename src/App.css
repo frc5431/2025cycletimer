@@ -40,3 +40,88 @@
 .read-the-docs {
   color: #888;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+
+.reef {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.coralstuff {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.individualcoral {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  align-items: center;
+  margin: 1vw;
+  font-size: 4rem;
+  background: #535bf2;
+  padding: 1vw;
+  border-radius: 10px;
+}
+
+.statusbutton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  padding: 1vw;
+  border-radius: 1vw;
+  background-color: #320e0e;
+  color: #fff;
+  font-size: 5rem;
+}
+
+.time {
+  font-size: 1.4rem;
+}
+
+.timerbuttons{
+  margin: 1vw;
+  font-size: 3rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  grid-auto-columns: max-content;
+}
+
+.column-1 {
+  /* First column with 3 elements */
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+}
+
+.column-2 {
+  /* Second column with 1 element */
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.column-3 {
+  /* Third column with 5 elements */
+  display: grid;
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+}
+
+/* Aesthetic styling */
+.grid-item {
+  border-radius: 5px;
+  text-align: center;
+}

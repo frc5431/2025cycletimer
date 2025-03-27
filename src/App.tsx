@@ -83,72 +83,77 @@ function App() {
 
   return (
     <>
-      {!endScreen && <>
-        <div className="reef">
-          <div className="individualcoral">
-            <button onClick={() => newCycle("L4")}>
-              L4
+      {!endScreen && <div className='grid-container'>
+        <div className='column-1'>
+          <div className="time grid-item">
+            <p>
+              Current Cycle: {cycles.length > 0 ?
+              (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length-1]).toFixed(2) :
+              (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
+            </p>
+            <p>
+              Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
+            </p>
+          </div>
+          <div className='grid-item' style={{display:"flex", flexDirection:"column"}}>
+            <button onClick={() => stopwatch.isRunning ? stopwatch.pause() : stopwatch.start()} style={{ fontSize: '3rem' }}>
+              <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
             </button>
           </div>
-          <div className="individualcoral">
-            <button onClick={() => newCycle("L3")}>
-              L3
+          <div className="coralstuff grid-item">
+            <button onClick={() => newCycle("Net")}>
+              <div className="individualcoral">
+                Net
+              </div>
+            </button>
+            <button onClick={() => newCycle("Processor")}>
+              <div className="individualcoral">
+                Process
+              </div>
             </button>
           </div>
-          <div className='individualcoral'>
-            <button onClick={() => newCycle("L2")}>
-              L2
-            </button>
-          </div>
-          <div className='individualcoral'>
-            <button onClick={() => newCycle("L1")}>
-              L1
-            </button>
+          <div className='grid-item' style={{textAlign: "center"}}>
+            <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => { setEndScreen(true); stopwatch.pause() }}>End</button>
           </div>
         </div>
-
-        <div className="coralstuff">
-          <button onClick={() => newCycle("Net")}>
+        <div className="column-2">
+          <div className='time grid-item'>
+            <p>
+              Average Cycle: {cycles.length > 0  ? averageCycle().toFixed(2) : "NO CYCLE"}
+            </p>
+            <p>
+              Delta Cycle (Last Cycle From average): {deltaCycle()}
+            </p>
+          </div>
+          <div className='grid-item'>
+            <button className="statusbutton" style={{ color: "#931314", fontSize: '8rem' }} onClick={() => newCycle("MISSED")}>MISS</button>
+          </div>
+        </div>
+        <div className="column-3">
+            <div className='grid-item'>
             <div className="individualcoral">
-              Net
+              <button onClick={() => newCycle("L4")}>
+                L4
+              </button>
             </div>
-          </button>
-          <button onClick={() => newCycle("Processor")}>
             <div className="individualcoral">
-              Process
+              <button onClick={() => newCycle("L3")}>
+                L3
+              </button>
             </div>
-          </button>
-        </div>
-
-        <div className="statusbuttons">
-          <button className="statusbutton" style={{ color: "#931314", fontSize: '8rem' }} onClick={() => newCycle("MISSED")}>MISS</button>
-        </div>
-
-        <div className="time">
-          <div style={{fontSize:'1.4rem'}}>
-          <div>
-            Current Cycle: {cycles.length > 0 ?
-            (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds) - cycles[cycles.length-1]).toFixed(2) :
-            (ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
-            {" "}||
-            Total Time: {(ConvertToSec(stopwatch.seconds, stopwatch.milliseconds)).toFixed(2)}
-          </div>
-          <div>
-            Average Cycle: {cycles.length > 0  ? averageCycle().toFixed(2) : "NO CYCLE"}
-            {" "}||
-            Delta Cycle (Last Cycle From average): {deltaCycle()}
+            <div className='individualcoral'>
+              <button onClick={() => newCycle("L2")}>
+                L2
+              </button>
+            </div>
+            <div className='individualcoral'>
+              <button onClick={() => newCycle("L1")}>
+                L1
+              </button>
+            </div>
           </div>
         </div>
-          <div style={{display:"flex", flexDirection:"column"}}>
-          <button onClick={() => stopwatch.isRunning ? stopwatch.pause() : stopwatch.start()} style={{ fontSize: '3rem' }}>
-            <span style={{ color: 'green' }}>START</span>/<span style={{ color: 'yellow' }}>PAUSE</span>
-          </button>
-          </div>
-        </div>
-        <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
-          <button className="statusbutton" style={{ bottom: 0, backgroundColor: "white", color: 'black' }} onClick={() => { setEndScreen(true); stopwatch.pause() }}>End</button>
-        </div>
-      </>
+      </div>
       }
       {endScreen && <>
         <div style={{ bottom: 0, position: "absolute", left: 0, textAlign: "center", margin: '3vh' }}>
@@ -164,7 +169,7 @@ function App() {
             </div>
           )) : null}
           {cycleMessages &&
-          <div >
+          <div>
             <br/>
             <button onClick={copyToClipboard} style={{color: 'bisque'}}>Copy to Clipboard</button>
           </div>
